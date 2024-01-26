@@ -34,6 +34,6 @@ nav .theme-doc-sidebar-menu.menu__list>li:nth-child(2):before {
   margin-top: 20px;
   content: "CoreShop Extensions";
   display: block;
-  font-weight: 600;
+  font-weight: bold;
   padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
 }
