@@ -63,6 +63,36 @@ jobs:
           cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
           sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/03_Credit_Bundle/index.md
 
+      - name: "Checkout CoreShop Document Routes Bundle Docs"
+        uses: "actions/checkout@v4"
+        with:
+          repository: "coreshop/document-routes-bundle"
+          ref: "main"
+          path: "./tmp/Document_Routes_Bundle"
+          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+
+      - name: "Move CoreShop Document Routes Bundle Docs"
+        run: |
+          mkdir docs/04_Document_Routes_Bundle 
+          mv tmp/Document_Routes_Bundle/docs/* docs/04_Document_Routes_Bundle
+          cp tmp/Document_Routes_Bundle/README.md docs/04_Document_Routes_Bundle/index.md
+          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/04_Document_Routes_Bundle/index.md
+
+      - name: "Checkout CoreShop Inbound Email Rules Bundle Docs"
+        uses: "actions/checkout@v4"
+        with:
+          repository: "coreshop/inbound-email-rules-bundle"
+          ref: "main"
+          path: "./tmp/Inbound_Email_Rules_Bundle"
+          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+
+      - name: "Move CoreShop Inbound Email Rules Bundle Docs"
+        run: |
+          mkdir docs/05_Inbound_Email_Rules_Bundle 
+          mv tmp/Inbound_Email_Rules_Bundle/docs/* docs/05_Inbound_Email_Rules_Bundle
+          cp tmp/Inbound_Email_Rules_Bundle/README.md docs/05_Inbound_Email_Rules_Bundle/index.md
+          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/05_Inbound_Email_Rules_Bundle/index.md
+
       - name: "Install Node"
         uses: actions/setup-node@v3
         with:
