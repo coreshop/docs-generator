@@ -14,6 +14,10 @@ jobs:
       - name: "Checkout code"
         uses: "actions/checkout@v4"
 
+      - name: "Create Docs Directory"
+        run: |
+          mkdir docs
+
       - name: "Checkout CoreShop Docs"
         uses: "actions/checkout@v4"
         with:
@@ -35,9 +39,6 @@ jobs:
           repository: "coreshop/batch-messenger-bundle"
           ref: "main"
           path: "./tmp/Batch_Messenger_Bundle"
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            docs/*
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
 
       - name: "Move CoreShop Batch Messenger Bundle Docs"
