@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         repo: [
-          { name: "coreshop/coreshop",                    branch: "4.0",  dir: "01_CoreShop", folder: "docs/docs" },
+          { name: "coreshop/coreshop",                    branch: "4.0",  dir: "01_CoreShop" },
           { name: "coreshop/batch-messenger-bundle",      branch: "main", dir: "02_Batch_Messenger_Bundle" },
           { name: "coreshop/credit-bundle",               branch: "main", dir: "03_Credit_Bundle" },
           { name: "coreshop/document-route-bundle",       branch: "main", dir: "04_Document_Route_Bundle" },
@@ -35,14 +35,7 @@ jobs:
           path: ./tmp/${{ matrix.repo.dir }}
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
 
-      - name: Move Repository Docs Deeper
-        if: ${{ matrix.repo.folder }}
-        run: |
-          mkdir -p docs
-          mv ./tmp/${{ matrix.repo.dir }}/${{ matrix.repo.folder }} docs/${{ matrix.repo.dir }}
-
       - name: Move Repository Docs
-        if: ${{ !matrix.repo.folder }}
         run: |
           mkdir -p docs
           mv ./tmp/${{ matrix.repo.dir }}/docs docs/${{ matrix.repo.dir }}
