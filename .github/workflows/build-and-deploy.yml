@@ -40,7 +40,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Build Docs
-        working-directory: "./docs-generator"
         run: |
           npm install
           npm run build
