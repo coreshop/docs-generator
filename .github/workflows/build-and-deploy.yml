@@ -7,89 +7,61 @@ permissions:
   contents: read
 
 jobs:
-  docs:
-    name: "Build & Deploy CoreShop Docs"
-    runs-on: "ubuntu-latest"
+  checkout-repos:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: [
+          { name: "coreshop/coreshop",                    branch: "4.0",  dir: "01_CoreShop", folder: "docs/docs" },
+          { name: "coreshop/batch-messenger-bundle",      branch: "main", dir: "02_Batch_Messenger_Bundle" },
+          { name: "coreshop/credit-bundle",               branch: "main", dir: "03_Credit_Bundle" },
+          { name: "coreshop/document-route-bundle",       branch: "main", dir: "04_Document_Route_Bundle" },
+          { name: "coreshop/inbound-email-rules-bundle",  branch: "main", dir: "05_Inbound_Email_Rules_Bundle" },
+        ]
     steps:
-      - name: "Checkout code"
-        uses: "actions/checkout@v4"
-
-      - name: "Create Docs Directory"
-        run: |
-          mkdir docs
-
-      - name: "Checkout CoreShop Docs"
-        uses: "actions/checkout@v4"
+      - name: Checkout ${{ matrix.repo.name }}
+        uses: actions/checkout@v4
         with:
-          repository: "coreshop/coreshop"
-          ref: "4.0"
-          path: "./tmp/CoreShop"
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            docs/docs/*
-
-      - name: "Move CoreShop Docs"
-        run: |
-          mv tmp/CoreShop/docs/docs docs/01_CoreShop
-
-      - name: "Checkout CoreShop Batch Messenger Bundle Docs"
-        uses: "actions/checkout@v4"
-        with:
-          repository: "coreshop/batch-messenger-bundle"
-          ref: "main"
-          path: "./tmp/Batch_Messenger_Bundle"
+          repository: ${{ matrix.repo.name }}
+          ref: ${{ matrix.repo.branch }}
+          path: ./tmp/${{ matrix.repo.dir }}
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
 
-      - name: "Move CoreShop Batch Messenger Bundle Docs"
+      - name: Move Repository Docs Deeper
+        if: ${{ matrix.repo.folder }}
         run: |
-          mv tmp/Batch_Messenger_Bundle/docs docs/02_Batch_Messenger_Bundle
-          cp tmp/Batch_Messenger_Bundle/README.md docs/02_Batch_Messenger_Bundle/index.md
-          sed -i 's|/docs||g' docs/02_Batch_Messenger_Bundle/index.md
+          mkdir -p docs
+          mv ./tmp/${{ matrix.repo.dir }}/${{ matrix.repo.folder }} docs/${{ matrix.repo.dir }}
 
-      - name: "Checkout CoreShop Credit Bundle Docs"
-        uses: "actions/checkout@v4"
+      - name: Move Repository Docs
+        if: ${{ !matrix.repo.folder }}
+        run: |
+          mkdir -p docs
+          mv ./tmp/${{ matrix.repo.dir }}/docs docs/${{ matrix.repo.dir }}
+          if [ -f "./tmp/${{ matrix.repo.dir }}/README.md" ]; then
+            cp ./tmp/${{ matrix.repo.dir }}/README.md docs/${{ matrix.repo.dir }}/index.md
+            sed -i 's|/docs||g' docs/${{ matrix.repo.dir }}/index.md
+          fi
+
+      - name: Upload Repo Docs
+        uses: actions/upload-artifact@v3
         with:
-          repository: "coreshop/credit-bundle"
-          ref: "main"
-          path: "./tmp/Credit_Bundle"
-          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+          name: ${{ matrix.repo.dir }}
+          path: docs/${{ matrix.repo.dir }}
 
-      - name: "Move CoreShop Credit Bundle Docs"
-        run: |
-          mv tmp/Credit_Bundle/docs docs/03_Credit_Bundle
-          cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
-          sed -i 's|/docs||g' docs/03_Credit_Bundle/index.md
-          cat docs/03_Credit_Bundle/index.md
+  build-docs:
+    needs: checkout-repos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: "Checkout CoreShop Document Route Bundle Docs"
-        uses: "actions/checkout@v4"
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
         with:
-          repository: "coreshop/document-route-bundle"
-          ref: "main"
-          path: "./tmp/Document_Route_Bundle"
-          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+          path: docs
 
-      - name: "Move CoreShop Document Route Bundle Docs"
-        run: |
-          mv tmp/Document_Route_Bundle/docs docs/04_Document_Route_Bundle
-          cp tmp/Document_Route_Bundle/README.md docs/04_Document_Route_Bundle/index.md
-          sed -i 's|/docs||g' docs/04_Document_Route_Bundle/index.md
-
-      - name: "Checkout CoreShop Inbound Email Rules Bundle Docs"
-        uses: "actions/checkout@v4"
-        with:
-          repository: "coreshop/inbound-email-rules-bundle"
-          ref: "main"
-          path: "./tmp/Inbound_Email_Rules_Bundle"
-          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
-
-      - name: "Move CoreShop Inbound Email Rules Bundle Docs"
-        run: |
-          mv tmp/Inbound_Email_Rules_Bundle/docs docs/05_Inbound_Email_Rules_Bundle
-          cp tmp/Inbound_Email_Rules_Bundle/README.md docs/05_Inbound_Email_Rules_Bundle/index.md
-          sed -i 's|docs/||g' docs/05_Inbound_Email_Rules_Bundle/index.md
-
-      - name: "Install Node"
+      - name: Install Node
         uses: actions/setup-node@v3
         with:
           node-version: 19.x
@@ -100,12 +72,111 @@ jobs:
           npm install
           npm run build
 
-      - name: Archive Docs
-        uses: actions/upload-artifact@v4
+      - name: Archive Final Docs
+        uses: actions/upload-artifact@v3
         with:
-          name: docs
-          path: |
-            build
+          name: final-docs
+          path: build
+#
+#  docs:
+#    name: "Build & Deploy CoreShop Docs"
+#    runs-on: "ubuntu-latest"
+#    steps:
+#      - name: "Checkout code"
+#        uses: "actions/checkout@v4"
+#
+#      - name: "Create Docs Directory"
+#        run: |
+#          mkdir docs
+#
+#      - name: "Checkout CoreShop Docs"
+#        uses: "actions/checkout@v4"
+#        with:
+#          repository: "coreshop/coreshop"
+#          ref: "4.0"
+#          path: "./tmp/CoreShop"
+#          sparse-checkout-cone-mode: false
+#          sparse-checkout: |
+#            docs/docs/*
+#
+#      - name: "Move CoreShop Docs"
+#        run: |
+#          mv tmp/CoreShop/docs/docs docs/01_CoreShop
+#
+#      - name: "Checkout CoreShop Batch Messenger Bundle Docs"
+#        uses: "actions/checkout@v4"
+#        with:
+#          repository: "coreshop/batch-messenger-bundle"
+#          ref: "main"
+#          path: "./tmp/Batch_Messenger_Bundle"
+#          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+#
+#      - name: "Move CoreShop Batch Messenger Bundle Docs"
+#        run: |
+#          mv tmp/Batch_Messenger_Bundle/docs docs/02_Batch_Messenger_Bundle
+#          cp tmp/Batch_Messenger_Bundle/README.md docs/02_Batch_Messenger_Bundle/index.md
+#          sed -i 's|/docs||g' docs/02_Batch_Messenger_Bundle/index.md
+#
+#      - name: "Checkout CoreShop Credit Bundle Docs"
+#        uses: "actions/checkout@v4"
+#        with:
+#          repository: "coreshop/credit-bundle"
+#          ref: "main"
+#          path: "./tmp/Credit_Bundle"
+#          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+#
+#      - name: "Move CoreShop Credit Bundle Docs"
+#        run: |
+#          mv tmp/Credit_Bundle/docs docs/03_Credit_Bundle
+#          cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
+#          sed -i 's|/docs||g' docs/03_Credit_Bundle/index.md
+#          cat docs/03_Credit_Bundle/index.md
+#
+#      - name: "Checkout CoreShop Document Route Bundle Docs"
+#        uses: "actions/checkout@v4"
+#        with:
+#          repository: "coreshop/document-route-bundle"
+#          ref: "main"
+#          path: "./tmp/Document_Route_Bundle"
+#          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+#
+#      - name: "Move CoreShop Document Route Bundle Docs"
+#        run: |
+#          mv tmp/Document_Route_Bundle/docs docs/04_Document_Route_Bundle
+#          cp tmp/Document_Route_Bundle/README.md docs/04_Document_Route_Bundle/index.md
+#          sed -i 's|/docs||g' docs/04_Document_Route_Bundle/index.md
+#
+#      - name: "Checkout CoreShop Inbound Email Rules Bundle Docs"
+#        uses: "actions/checkout@v4"
+#        with:
+#          repository: "coreshop/inbound-email-rules-bundle"
+#          ref: "main"
+#          path: "./tmp/Inbound_Email_Rules_Bundle"
+#          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+#
+#      - name: "Move CoreShop Inbound Email Rules Bundle Docs"
+#        run: |
+#          mv tmp/Inbound_Email_Rules_Bundle/docs docs/05_Inbound_Email_Rules_Bundle
+#          cp tmp/Inbound_Email_Rules_Bundle/README.md docs/05_Inbound_Email_Rules_Bundle/index.md
+#          sed -i 's|docs/||g' docs/05_Inbound_Email_Rules_Bundle/index.md
+#
+#      - name: "Install Node"
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 19.x
+#          registry-url: 'https://registry.npmjs.org'
+#
+#      - name: Build Docs
+#        run: |
+#          npm install
+#          npm run build
+#
+#      - name: Archive Docs
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: docs
+#          path: |
+#            build
 #
 #      - name:  Authenticate to Google Cloud
 #        uses: 'google-github-actions/auth@v0'
