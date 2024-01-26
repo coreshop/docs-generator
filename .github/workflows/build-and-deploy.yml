@@ -47,6 +47,20 @@ jobs:
           mv tmp/Batch_Messenger_Bundle/docs/* docs/02_Batch_Messenger_Bundle
           cp tmp/Batch_Messenger_Bundle/README.md docs/02_Batch_Messenger_Bundle/index.md
 
+      - name: "Checkout CoreShop Credit Bundle Docs"
+        uses: "actions/checkout@v4"
+        with:
+          repository: "coreshop/credit-bundle"
+          ref: "main"
+          path: "./tmp/Credit_Bundle"
+          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+
+      - name: "Move CoreShop Credit Bundle Docs"
+        run: |
+          mkdir docs/03_Credit_Bundle 
+          mv tmp/Credit_Bundle/docs/* docs/03_Credit_Bundle
+          cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
+
       - name: "Install Node"
         uses: actions/setup-node@v3
         with:
