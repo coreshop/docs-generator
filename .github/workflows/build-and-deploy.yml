@@ -41,6 +41,7 @@ jobs:
 
       - name: Build Docs
         run: |
+          ls -la docs
           npm install
           npm run build
 
