@@ -40,7 +40,9 @@ jobs:
           mkdir -p docs
           mv ./tmp/${{ matrix.repo.dir }}/docs docs/${{ matrix.repo.dir }}
           if [ -f "./tmp/${{ matrix.repo.dir }}/README.md" ]; then
-            cp ./tmp/${{ matrix.repo.dir }}/README.md docs/${{ matrix.repo.dir }}/index.md
+            if [ ! -e "docs/${{ matrix.repo.dir }}/00_Introduction.md" ]; then
+              cp ./tmp/${{ matrix.repo.dir }}/README.md docs/${{ matrix.repo.dir }}/index.md
+            fi
             sed -i 's|/docs||g' docs/${{ matrix.repo.dir }}/index.md
           fi
 
