@@ -20,8 +20,9 @@ jobs:
           repository: "coreshop/coreshop"
           ref: "4.0"
           path: "./docs/01_CoreShop"
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            docs/docs
+            docs/docs/*
 
       - name: "Checkout CoreShop Batch Messenger Bundle Docs"
         uses: "actions/checkout@v4"
@@ -29,8 +30,9 @@ jobs:
           repository: "coreshop/batch-messenger-bundle"
           ref: "main"
           path: "./docs/02_Batch_Messenger_Bundle"
+          sparse-checkout-cone-mode: false
           sparse-checkout: |
-            docs
+            docs/*
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
 
       - name: "Install Node"
