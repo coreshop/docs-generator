@@ -31,7 +31,7 @@ jobs:
       - name: "Move CoreShop Docs"
         run: |
           mkdir docs/01_CoreShop
-          mv tmp/CoreShop/docs/docs/* docs/01_CoreShop
+          mv tmp/CoreShop/docs/docs docs/01_CoreShop
 
       - name: "Checkout CoreShop Batch Messenger Bundle Docs"
         uses: "actions/checkout@v4"
@@ -44,7 +44,7 @@ jobs:
       - name: "Move CoreShop Batch Messenger Bundle Docs"
         run: |
           mkdir docs/02_Batch_Messenger_Bundle 
-          mv tmp/Batch_Messenger_Bundle/docs/* docs/02_Batch_Messenger_Bundle
+          mv tmp/Batch_Messenger_Bundle/docs docs/02_Batch_Messenger_Bundle
           cp tmp/Batch_Messenger_Bundle/README.md docs/02_Batch_Messenger_Bundle/index.md
           sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/02_Batch_Messenger_Bundle/index.md
 
@@ -59,7 +59,7 @@ jobs:
       - name: "Move CoreShop Credit Bundle Docs"
         run: |
           mkdir docs/03_Credit_Bundle 
-          mv tmp/Credit_Bundle/docs/* docs/03_Credit_Bundle
+          mv tmp/Credit_Bundle/docs docs/03_Credit_Bundle
           cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
           sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/03_Credit_Bundle/index.md
 
@@ -89,7 +89,7 @@ jobs:
       - name: "Move CoreShop Inbound Email Rules Bundle Docs"
         run: |
           mkdir docs/05_Inbound_Email_Rules_Bundle 
-          mv tmp/Inbound_Email_Rules_Bundle/docs/* docs/05_Inbound_Email_Rules_Bundle
+          mv tmp/Inbound_Email_Rules_Bundle/docs docs/05_Inbound_Email_Rules_Bundle
           cp tmp/Inbound_Email_Rules_Bundle/README.md docs/05_Inbound_Email_Rules_Bundle/index.md
           sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/05_Inbound_Email_Rules_Bundle/index.md
 
