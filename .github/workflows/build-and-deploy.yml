@@ -46,7 +46,7 @@ jobs:
           mkdir docs/02_Batch_Messenger_Bundle 
           mv tmp/Batch_Messenger_Bundle/docs/* docs/02_Batch_Messenger_Bundle
           cp tmp/Batch_Messenger_Bundle/README.md docs/02_Batch_Messenger_Bundle/index.md
-          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' index.md
+          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/02_Batch_Messenger_Bundle/index.md
 
       - name: "Checkout CoreShop Credit Bundle Docs"
         uses: "actions/checkout@v4"
@@ -61,7 +61,7 @@ jobs:
           mkdir docs/03_Credit_Bundle 
           mv tmp/Credit_Bundle/docs/* docs/03_Credit_Bundle
           cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
-          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' index.md
+          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/03_Credit_Bundle/index.md
 
       - name: "Install Node"
         uses: actions/setup-node@v3
