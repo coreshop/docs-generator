@@ -26,7 +26,7 @@ jobs:
 
       - name: "Move CoreShop Docs"
         run: |
-          mv docs/01_CoreShop/docs/docs/* .
+          mv docs/01_CoreShop/docs/docs/* docs/01_CoreShop
 
       - name: "Checkout CoreShop Batch Messenger Bundle Docs"
         uses: "actions/checkout@v4"
@@ -41,7 +41,7 @@ jobs:
 
       - name: "Move CoreShop Docs"
         run: |
-          mv docs/02_Batch_Messenger_Bundle/docs/* .
+          mv docs/02_Batch_Messenger_Bundle/docs/* docs/02_Batch_Messenger_Bundle
 
       - name: "Install Node"
         uses: actions/setup-node@v3
