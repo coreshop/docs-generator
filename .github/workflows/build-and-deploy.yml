@@ -41,7 +41,8 @@ jobs:
 
       - name: Build Docs
         run: |
-          ls -la docs
+          ls -la docs/01_CoreShop
+          ls -la docs/02_Batch_Messenger_Bundle
           npm install
           npm run build
 
