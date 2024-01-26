@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   docs:
-    name: "Generate docs CoreShop Docs Generator"
+    name: "Build & Deploy CoreShop Docs"
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout code"
@@ -18,7 +18,7 @@ jobs:
         uses: "actions/checkout@v4"
         with:
           repository: "coreshop/coreshop"
-          ref: "main"
+          ref: "4.0"
           path: "./docs/01_CoreShop"
           sparse-checkout: |
             docs/docs
