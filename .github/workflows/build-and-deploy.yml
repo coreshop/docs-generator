@@ -19,29 +19,32 @@ jobs:
         with:
           repository: "coreshop/coreshop"
           ref: "4.0"
-          path: "./docs/01_CoreShop"
+          path: "./tmp/CoreShop"
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             docs/docs/*
 
       - name: "Move CoreShop Docs"
         run: |
-          mv docs/01_CoreShop/docs/docs/* docs/01_CoreShop
+          mkdir docs/01_CoreShop
+          mv tmp/CoreShop/docs/docs/* docs/01_CoreShop
 
       - name: "Checkout CoreShop Batch Messenger Bundle Docs"
         uses: "actions/checkout@v4"
         with:
           repository: "coreshop/batch-messenger-bundle"
           ref: "main"
-          path: "./docs/02_Batch_Messenger_Bundle"
+          path: "./tmp/Batch_Messenger_Bundle"
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             docs/*
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
 
-      - name: "Move CoreShop Docs"
+      - name: "Move CoreShop Batch Messenger Bundle Docs"
         run: |
-          mv docs/02_Batch_Messenger_Bundle/docs/* docs/02_Batch_Messenger_Bundle
+          mkdir docs/02_Batch_Messenger_Bundle 
+          mv tmp/Batch_Messenger_Bundle/docs/* docs/02_Batch_Messenger_Bundle
+          cp tmp/Batch_Messenger_Bundle/README.md docs/02_Batch_Messenger_Bundle/index.md
 
       - name: "Install Node"
         uses: actions/setup-node@v3
@@ -72,6 +75,6 @@ jobs:
         uses: 'google-github-actions/upload-cloud-storage@v0'
         if: github.ref == 'refs/heads/4.0'
         with:
-          path: 'docs/build/'
+          path: 'build/'
           destination: 'cors-wolke-coreshop-docs/4.0.0'
           parent: false
