@@ -43,6 +43,9 @@ jobs:
             if [ ! -e "docs/${{ matrix.repo.dir }}/00_Introduction.md" ]; then
               cp ./tmp/${{ matrix.repo.dir }}/README.md docs/${{ matrix.repo.dir }}/index.md
             fi
+          fi
+          
+          if [ -f "docs/${{ matrix.repo.dir }}/index.md" ]; then
             sed -i 's|/docs||g' docs/${{ matrix.repo.dir }}/index.md
           fi
 
