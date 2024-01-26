@@ -36,7 +36,7 @@ jobs:
         run: |
           mkdir docs
           # copy docs to working directory
-          cp -r ./docs ./docs-generator/docs
+          cp -r ../docs ./docs
           
           # copy readme to working directory
           cp -r ../README.md ./docs/
