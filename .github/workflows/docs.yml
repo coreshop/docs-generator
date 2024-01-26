@@ -2,6 +2,9 @@ name: "Documentation"
 
 on:
   workflow_call:
+    secrets:
+      DOCS_GENERATOR_ACCESS_TOKEN:
+        required: true
 
 permissions:
   contents: read
