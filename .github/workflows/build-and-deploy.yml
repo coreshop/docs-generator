@@ -63,20 +63,20 @@ jobs:
           cp tmp/Credit_Bundle/README.md docs/03_Credit_Bundle/index.md
           sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/03_Credit_Bundle/index.md
 
-      - name: "Checkout CoreShop Document Routes Bundle Docs"
+      - name: "Checkout CoreShop Document Route Bundle Docs"
         uses: "actions/checkout@v4"
         with:
-          repository: "coreshop/document-routes-bundle"
+          repository: "coreshop/document-route-bundle"
           ref: "main"
-          path: "./tmp/Document_Routes_Bundle"
+          path: "./tmp/Document_Route_Bundle"
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
 
-      - name: "Move CoreShop Document Routes Bundle Docs"
+      - name: "Move CoreShop Document Route Bundle Docs"
         run: |
-          mkdir docs/04_Document_Routes_Bundle 
-          mv tmp/Document_Routes_Bundle/docs/* docs/04_Document_Routes_Bundle
-          cp tmp/Document_Routes_Bundle/README.md docs/04_Document_Routes_Bundle/index.md
-          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/04_Document_Routes_Bundle/index.md
+          mkdir docs/04_Document_Route_Bundle 
+          mv tmp/Document_Route_Bundle/docs/* docs/04_Document_Route_Bundle
+          cp tmp/Document_Route_Bundle/README.md docs/04_Document_Route_Bundle/index.md
+          sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/04_Document_Route_Bundle/index.md
 
       - name: "Checkout CoreShop Inbound Email Rules Bundle Docs"
         uses: "actions/checkout@v4"
