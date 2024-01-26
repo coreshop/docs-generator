@@ -24,6 +24,10 @@ jobs:
           sparse-checkout: |
             docs/docs/*
 
+      - name: "Move CoreShop Docs"
+        run: |
+          mv docs/01_CoreShop/docs/docs/* .
+
       - name: "Checkout CoreShop Batch Messenger Bundle Docs"
         uses: "actions/checkout@v4"
         with:
@@ -34,6 +38,10 @@ jobs:
           sparse-checkout: |
             docs/*
           token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+
+      - name: "Move CoreShop Docs"
+        run: |
+          mv docs/02_Batch_Messenger_Bundle/docs/* .
 
       - name: "Install Node"
         uses: actions/setup-node@v3
