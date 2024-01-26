@@ -1,0 +1,53 @@
+name: "Build & Deploy Docs"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    name: "Generate docs CoreShop Docs Generator"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v4"
+
+      - name: "Checkout CoreShop Docs"
+        uses: "actions/checkout@v4"
+        with:
+          repository: "coreshop/coreshop"
+          ref: "main"
+          path: "./docs/01_CoreShop"
+          sparse-checkout: |
+            docs/docs
+
+      - name: "Checkout CoreShop Batch Messenger Bundle Docs"
+        uses: "actions/checkout@v4"
+        with:
+          repository: "coreshop/batch-messenger-bundle"
+          ref: "main"
+          path: "./docs/02_Batch_Messenger_Bundle"
+          sparse-checkout: |
+            docs
+          token: ${{ secrets.DOCS_GENERATOR_ACCESS_TOKEN }}
+
+      - name: "Install Node"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Build Docs
+        working-directory: "./docs-generator"
+        run: |
+          npm install
+          npm run build
+
+      - name: Archive Docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: |
+            build
