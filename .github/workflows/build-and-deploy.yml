@@ -74,9 +74,7 @@ jobs:
       - name: "Move CoreShop Document Route Bundle Docs"
         run: |
           mkdir docs/04_Document_Route_Bundle
-          ls -la tmp/Document_Route_Bundle
-          ls -la tmp/Document_Route_Bundle/docs
-          mv tmp/Document_Route_Bundle/docs/* docs/04_Document_Route_Bundle
+          mv tmp/Document_Route_Bundle/docs docs/04_Document_Route_Bundle
           cp tmp/Document_Route_Bundle/README.md docs/04_Document_Route_Bundle/index.md
           sed -i 's/\.\/docs\/\(.*\.png\)/\.\/\1/g' docs/04_Document_Route_Bundle/index.md
 
