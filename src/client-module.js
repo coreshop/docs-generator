@@ -1,7 +1,7 @@
 export function onRouteDidUpdate({location, previousLocation}) {
     let showRibbon = true;
 
-    if (location.pathname === '/4.0.0' || location.pathname.startsWith('/4.0.0/CoreShop')) {
+    if (location.pathname === '/4.0.0/' || location.pathname.startsWith('/4.0.0/CoreShop')) {
         showRibbon = false;
     }
 
