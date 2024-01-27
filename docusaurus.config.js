@@ -6,6 +6,7 @@ const darkCodeTheme = require('prism-react-renderer').themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+  clientModules: ['src/client-module.js'],
   title: 'CoreShop 4.0.x - Pimcore eCommerce - Documentation',
   tagline: 'CoreShop - Pimcore eCommerce - Documentation',
   favicon: 'img/favicon.png',

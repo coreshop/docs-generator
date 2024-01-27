@@ -6,34 +6,89 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #cd1017;
-  --ifm-color-primary-dark: #b90e15;
-  --ifm-color-primary-darker: #ae0e14;
-  --ifm-color-primary-darkest: #900b10;
-  --ifm-color-primary-light: #e21219;
-  --ifm-color-primary-lighter: #e6121a;
-  --ifm-color-primary-lightest: #ea121a;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+    --ifm-color-primary: #cd1017;
+    --ifm-color-primary-dark: #b90e15;
+    --ifm-color-primary-darker: #ae0e14;
+    --ifm-color-primary-darkest: #900b10;
+    --ifm-color-primary-light: #e21219;
+    --ifm-color-primary-lighter: #e6121a;
+    --ifm-color-primary-lightest: #ea121a;
+    --ifm-code-font-size: 95%;
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #f0454b;
-  --ifm-color-primary-dark: #f03f45;
-  --ifm-color-primary-darker: #f03f45;
-  --ifm-color-primary-darkest: #f03f45;
-  --ifm-color-primary-light: #f8acaf;
-  --ifm-color-primary-lighter: #f8a9ac;
-  --ifm-color-primary-lightest: #f9b7ba;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+    --ifm-color-primary: #f0454b;
+    --ifm-color-primary-dark: #f03f45;
+    --ifm-color-primary-darker: #f03f45;
+    --ifm-color-primary-darkest: #f03f45;
+    --ifm-color-primary-light: #f8acaf;
+    --ifm-color-primary-lighter: #f8a9ac;
+    --ifm-color-primary-lightest: #f9b7ba;
+    --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-nav .theme-doc-sidebar-menu.menu__list>li:nth-child(2):before {
-  color: var(--ifm-menu-color);
-  margin-top: 20px;
-  content: "CoreShop Enterprise Extensions";
-  display: block;
-  font-weight: bold;
-  padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
+nav .theme-doc-sidebar-menu.menu__list > li:nth-child(2):before {
+    color: var(--ifm-menu-color);
+    margin-top: 20px;
+    content: "CoreShop Enterprise Extensions";
+    display: block;
+    font-weight: bold;
+    padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
+}
+
+.enterprise-extension .ribbon-box {
+    position: relative;
+}
+
+.enterprise-extension .ribbon {
+    height: 75px;
+    overflow: hidden;
+    position: absolute;
+    right: -5px;
+    text-align: right;
+    top: -5px;
+    width: 75px;
+    z-index: 1;
+}
+
+.enterprise-extension .ribbon span {
+    background: linear-gradient(#cd1017, #8F0B10);
+    box-shadow: 0 3px 10px -5px #000;
+    color: #fff;
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 20px;
+    position: absolute;
+    right: -21px;
+    text-align: center;
+    text-transform: uppercase;
+    top: 19px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    width: 100px;
+}
+
+.enterprise-extension .ribbon span:before {
+    border-color: #cd1017 #0000 #0000 #cd1017;
+    border-style: solid;
+    border-width: 3px;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: 100%;
+    z-index: -1;
+}
+
+.enterprise-extension .ribbon span:after {
+    border-color: #8F0B10 #cd1017 #0000 #0000;
+    border-style: solid;
+    border-width: 3px;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: -1;
 }
