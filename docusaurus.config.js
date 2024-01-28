@@ -82,8 +82,18 @@ const config = {
             label: 'Documentation',
           },
           {
-            href: 'https://pimcore.com/docs',
-            label: 'Pimcore Documentation',
+            href: 'https://www.coreshop.org/en/partner',
+            label: 'Partner Program',
+            position: 'left'
+          },
+          {
+            href: 'https://www.coreshop.org/en/product/enterprise-bundles',
+            label: 'Enterprise Extensions',
+            position: 'left'
+          },
+          {
+            href: 'https://www.coreshop.org/en/contact',
+            label: 'Contact Us',
             position: 'left'
           },
           {
