@@ -156,7 +156,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download 4.0 Artifacts
+      - name: Download Docs Artifact
         uses: actions/download-artifact@v3
         with:
           name: docs
@@ -188,5 +188,5 @@ jobs:
         uses: 'google-github-actions/upload-cloud-storage@v2'
         with:
           path: 'build/'
-          destination: 'cors-wolke-coreshop-docs/4.0.0'
+          destination: 'cors-wolke-coreshop-docs'
           parent: false
