@@ -7,15 +7,15 @@ const darkCodeTheme = require('prism-react-renderer').themes.dracula;
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   clientModules: ['src/client-module.js'],
-  title: 'CoreShop 4.0.x - Pimcore eCommerce - Documentation',
-  tagline: 'CoreShop - Pimcore eCommerce - Documentation',
+  title: 'CoreShop',
+  tagline: 'CoreShop - Pimcore enhanced eCommerce',
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here
   url: 'https://docs.coreshop.org',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/4.0.0/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -40,11 +40,18 @@ const config = {
       ({
         docs: {
           routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/coreshop/CoreShop/tree/4.0/docs',
+          lastVersion: 'current',
+          versions: {
+            current: {
+              label: '4.0',
+              path: '',
+            },
+            '4.1': {
+              label: '4.1',
+              path: '4.1',
+              banner: 'unreleased',
+            }
+          },
         },
         blog: false,
         theme: {
@@ -81,7 +88,7 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'defaultSidebar',
             position: 'left',
             label: 'Documentation',
           },
@@ -99,6 +106,18 @@ const config = {
             href: 'https://www.coreshop.org/en/contact',
             label: 'Contact Us',
             position: 'left'
+          },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+            dropdownItemsAfter: [
+                {href: 'https://docs.coreshop.org/3.1.0', label: '3.1 (unmaintained)'},
+                {href: 'https://docs.coreshop.org/3.0.0', label: '3.0 (unmaintained)'},
+                {href: 'https://docs.coreshop.org/2.2.0', label: '2.2 (unmaintained)'},
+                {href: 'https://docs.coreshop.org/2.1.0', label: '2.1 (unmaintained)'},
+            ],
+
           },
           {
             href: 'https://github.com/coreshop/CoreShop',

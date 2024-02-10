@@ -15,19 +15,33 @@ jobs:
     strategy:
       matrix:
         repo: [
-          { name: "coreshop/coreshop",                    branch: "4.0",  dir: "01_CoreShop" },
-          { name: "coreshop/batch-messenger-bundle",      branch: "main", dir: "02_Batch_Messenger_Bundle" },
-          { name: "coreshop/credit-bundle",               branch: "main", dir: "03_Credit_Bundle" },
-          { name: "coreshop/document-route-bundle",       branch: "main", dir: "04_Document_Route_Bundle" },
-          { name: "coreshop/inbound-email-rules-bundle",  branch: "main", dir: "05_Inbound_Email_Rules_Bundle" },
-          { name: "coreshop/index-geo-bundle",            branch: "main", dir: "06_Index_GEO_Bundle" },
-          { name: "coreshop/voucher-credit-bundle",       branch: "main", dir: "07_Voucher_Credit_Bundle" },
-          { name: "coreshop/warehouse-bundle",            branch: "main", dir: "08_Warehouse_Bundle" },
-          { name: "coreshop/deposit-bundle",              branch: "main", dir: "09_Deposit_Bundle" },
-          { name: "coreshop/customer-cluster-bundle",     branch: "main", dir: "10_Customer_Cluster_Bundle" },
-          { name: "coreshop/b2b-company-bundle",          branch: "main", dir: "11_B2B_Company_Bundle" },
-          { name: "coreshop/headless-bundle",             branch: "main", dir: "12_Headless_Bundle" },
-          { name: "coreshop/loyalty-bundle",              branch: "main", dir: "13_Loyalty_Bundle" }
+          { name: "coreshop/coreshop",                    branch: "4.0",  version: '4.0', dir: "01_CoreShop" },
+          { name: "coreshop/batch-messenger-bundle",      branch: "main", version: '4.0', dir: "02_Batch_Messenger_Bundle" },
+          { name: "coreshop/credit-bundle",               branch: "main", version: '4.0', dir: "03_Credit_Bundle" },
+          { name: "coreshop/document-route-bundle",       branch: "main", version: '4.0', dir: "04_Document_Route_Bundle" },
+          { name: "coreshop/inbound-email-rules-bundle",  branch: "main", version: '4.0', dir: "05_Inbound_Email_Rules_Bundle" },
+          { name: "coreshop/index-geo-bundle",            branch: "main", version: '4.0', dir: "06_Index_GEO_Bundle" },
+          { name: "coreshop/voucher-credit-bundle",       branch: "main", version: '4.0', dir: "07_Voucher_Credit_Bundle" },
+          { name: "coreshop/warehouse-bundle",            branch: "main", version: '4.0', dir: "08_Warehouse_Bundle" },
+          { name: "coreshop/deposit-bundle",              branch: "main", version: '4.0', dir: "09_Deposit_Bundle" },
+          { name: "coreshop/customer-cluster-bundle",     branch: "main", version: '4.0', dir: "10_Customer_Cluster_Bundle" },
+          { name: "coreshop/b2b-company-bundle",          branch: "main", version: '4.0', dir: "11_B2B_Company_Bundle" },
+          { name: "coreshop/headless-bundle",             branch: "main", version: '4.0', dir: "12_Headless_Bundle" },
+          { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.0', dir: "13_Loyalty_Bundle" },
+
+          { name: "coreshop/coreshop",                    branch: "next", version: '4.1', dir: "01_CoreShop" },
+          { name: "coreshop/batch-messenger-bundle",      branch: "main", version: '4.1', dir: "02_Batch_Messenger_Bundle" },
+          { name: "coreshop/credit-bundle",               branch: "main", version: '4.1', dir: "03_Credit_Bundle" },
+          { name: "coreshop/document-route-bundle",       branch: "main", version: '4.1', dir: "04_Document_Route_Bundle" },
+          { name: "coreshop/inbound-email-rules-bundle",  branch: "main", version: '4.1', dir: "05_Inbound_Email_Rules_Bundle" },
+          { name: "coreshop/index-geo-bundle",            branch: "main", version: '4.1', dir: "06_Index_GEO_Bundle" },
+          { name: "coreshop/voucher-credit-bundle",       branch: "main", version: '4.1', dir: "07_Voucher_Credit_Bundle" },
+          { name: "coreshop/warehouse-bundle",            branch: "main", version: '4.1', dir: "08_Warehouse_Bundle" },
+          { name: "coreshop/deposit-bundle",              branch: "main", version: '4.1', dir: "09_Deposit_Bundle" },
+          { name: "coreshop/customer-cluster-bundle",     branch: "main", version: '4.1', dir: "10_Customer_Cluster_Bundle" },
+          { name: "coreshop/b2b-company-bundle",          branch: "main", version: '4.1', dir: "11_B2B_Company_Bundle" },
+          { name: "coreshop/headless-bundle",             branch: "main", version: '4.1', dir: "12_Headless_Bundle" },
+          { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.1', dir: "13_Loyalty_Bundle" }
         ]
     steps:
       - name: Checkout ${{ matrix.repo.name }}
@@ -52,23 +66,101 @@ jobs:
             sed -i 's|/docs||g' docs/${{ matrix.repo.dir }}/index.md
           fi
 
-      - name: Upload Repo Docs
+      - name: Upload Docs
         uses: actions/upload-artifact@v3
+        if: ${{ matrix.repo.version == '4.0' }}
         with:
-          name: ${{ matrix.repo.dir }}
+          name: docs-${{ matrix.repo.dir }}
           path: docs/${{ matrix.repo.dir }}
 
-  build-docs:
+      - name: Upload Docs
+        uses: actions/upload-artifact@v3
+        if: ${{ matrix.repo.version != '4.0' }}
+        with:
+          name: versioned-${{ matrix.repo.version }}-${{ matrix.repo.dir }}
+          path: docs/${{ matrix.repo.dir }}
+
+  merge:
     needs: checkout-repos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Move Artifacts
+        run: |
+          mkdir -p docs
+          mkdir -p versioned_docs
+          mkdir -p versioned_sidebars
+        
+          for docs_dir in docs-*; do
+            if [ -d "$docs_dir" ]; then
+              new_dir_name=${docs_dir#docs-}
+              mv "$docs_dir" "docs/$new_dir_name"
+            fi
+          done
+          
+          for versioned_dir in versioned-*; do
+            if [ -d "$versioned_dir" ]; then
+              version=$(echo "$versioned_dir" | sed -E 's/versioned-([0-9]+\.[0-9]+)-.*/\1/')
+              project_name=$(echo "$versioned_dir" | sed -E 's/versioned-[0-9]+\.[0-9]+-(.*)/\1/')
+              mkdir -p "versioned_docs/version-$version"
+          
+              mv "$versioned_dir" "versioned_docs/version-$version/$project_name"
+              sidebar_file="versioned_sidebars/version-$version-sidebars.json"
+              echo '{
+                "defaultSidebar": [
+                  {
+                    "type": "autogenerated",
+                    "dirName": "."
+                  }
+                ]
+              }' > "$sidebar_file"
+            fi
+          done
+
+      - name: Create Versions File
+        run: |
+          versions_json="versions.json"
+          echo "[" > "$versions_json"
+          
+          counter=0
+          for version_dir in versioned_docs/version-*; do
+            if [ -d "$version_dir" ]; then
+              version=$(basename "$version_dir" | sed -E 's/version-([0-9]+\.[0-9]+)/\1/')
+
+              if [ $counter -gt 0 ]; then
+                echo "," >> "$versions_json"
+              fi
+              
+              echo -n "  \"$version\"" >> "$versions_json"
+              
+              counter=$(expr $counter + 1)
+            fi
+          done
+          
+          echo -e "\n]" >> "$versions_json"
+          
+          cat "$versions_json"
+
+      - name: Upload Merged
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: .
+
+  build-docs:
+    needs: merge
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Artifacts
+      - name: Download 4.0 Artifacts
         uses: actions/download-artifact@v3
         with:
-          path: docs
+          name: docs
+          path: .
 
       - name: Install Node
         uses: actions/setup-node@v3
