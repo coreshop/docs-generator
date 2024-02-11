@@ -130,41 +130,20 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs (maintained)',
+            title: 'About',
             items: [
               {
-                label: 'Documentation',
-                to: '/',
+                label: 'CoreShop Website',
+                href: 'https://www.coreshop.org',
               },
               {
-                label: '3.1',
-                to: 'https://docs.coreshop.org/3.1.0/',
+                label: 'Partner Program',
+                href: 'https://www.coreshop.org/en/partner',
               },
               {
-                label: 'latest',
-                to: 'https://docs.coreshop.org/latest/',
+                href: 'https://www.coreshop.org/en/product/enterprise-bundles',
+                label: 'Enterprise Extensions',
               },
-            ],
-          },
-          {
-            title: 'Docs (unmainainted)',
-            items: [
-              {
-                label: '2.0',
-                to: 'https://docs.coreshop.org/2.0.0/',
-              },
-              {
-                label: '2.1',
-                to: 'https://docs.coreshop.org/2.1.0/',
-              },
-              {
-                label: '2.2',
-                to: 'https://docs.coreshop.org/2.2.0/',
-              },
-              {
-                label: '3.0',
-                to: 'https://docs.coreshop.org/3.0.0/',
-              }
             ],
           },
           {
@@ -179,16 +158,7 @@ const config = {
                 href: 'https://github.com/coreshop/CoreShop',
               },
             ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'CoreShop Website',
-                href: 'https://www.coreshop.org',
-              },
-            ],
-          },
+          }
         ],
         copyright: `Copyright © ${new Date().getFullYear()} CoreShop GmbH. Built with Docusaurus.`,
       },
