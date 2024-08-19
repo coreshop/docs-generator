@@ -42,7 +42,7 @@ jobs:
           { name: "coreshop/customer-cluster-bundle",     branch: "main", version: '4.1', dir: "10_Customer_Cluster_Bundle" },
           { name: "coreshop/b2b-company-bundle",          branch: "main", version: '4.1', dir: "11_B2B_Company_Bundle" },
           { name: "coreshop/headless-bundle",             branch: "main", version: '4.1', dir: "12_Headless_Bundle" },
-          { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.1', dir: "13_Loyalty_Bundle" }
+          { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.1', dir: "13_Loyalty_Bundle" },
           { name: "coreshop/quick-order-bundle",          branch: "main", version: '4.1', dir: "14_Quick_Order_Bundle" }
         ]
     steps:
