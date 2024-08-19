@@ -28,6 +28,7 @@ jobs:
           { name: "coreshop/b2b-company-bundle",          branch: "main", version: '4.0', dir: "11_B2B_Company_Bundle" },
           { name: "coreshop/headless-bundle",             branch: "main", version: '4.0', dir: "12_Headless_Bundle" },
           { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.0', dir: "13_Loyalty_Bundle" },
+          { name: "coreshop/quick-order-bundle",          branch: "main", version: '4.0', dir: "14_Quick_Order_Bundle" },
 
           { name: "coreshop/coreshop",                    branch: "next", version: '4.1', dir: "01_CoreShop" },
           { name: "coreshop/batch-messenger-bundle",      branch: "main", version: '4.1', dir: "02_Batch_Messenger_Bundle" },
@@ -42,6 +43,7 @@ jobs:
           { name: "coreshop/b2b-company-bundle",          branch: "main", version: '4.1', dir: "11_B2B_Company_Bundle" },
           { name: "coreshop/headless-bundle",             branch: "main", version: '4.1', dir: "12_Headless_Bundle" },
           { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.1', dir: "13_Loyalty_Bundle" }
+          { name: "coreshop/quick-order-bundle",          branch: "main", version: '4.1', dir: "14_Quick_Order_Bundle" }
         ]
     steps:
       - name: Checkout ${{ matrix.repo.name }}
@@ -61,6 +63,25 @@ jobs:
               cp ./tmp/${{ matrix.repo.dir }}/README.md docs/${{ matrix.repo.dir }}/index.md
             fi
           fi
+          
+          if ls ./tmp/${{ matrix.repo.dir }}/CHANGELOG-*.md 1> /dev/null 2>&1; then
+            touch docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
+            echo "# Upgrade Notes" >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
+            echo -e "\n" >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
+            echo "Always check this page for some important upgrade notes before updating to the latest coreshop build." >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
+            echo -e "\n" >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
+          
+            for file in $(ls ./tmp/${{ matrix.repo.dir }}/CHANGELOG-*.md | sort -Vr); do
+              cat "$file" >> "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
+              echo -e "\n\n" >> "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
+            done
+          
+            if [ ${{ matrix.repo.name }} = "coreshop/coreshop" ]; then
+              rm -f docs/${{ matrix.repo.dir }}/01_Getting_Started/02_Upgrade_Notes.md
+              mv docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md docs/${{ matrix.repo.dir }}/01_Getting_Started/02_Upgrade_Notes.md
+            fi
+          fi
+          
           
           if [ -f "docs/${{ matrix.repo.dir }}/index.md" ]; then
             sed -i 's|/docs||g' docs/${{ matrix.repo.dir }}/index.md
@@ -92,20 +113,20 @@ jobs:
           mkdir -p docs
           mkdir -p versioned_docs
           mkdir -p versioned_sidebars
-        
+
           for docs_dir in docs-*; do
             if [ -d "$docs_dir" ]; then
               new_dir_name=${docs_dir#docs-}
               mv "$docs_dir" "docs/$new_dir_name"
             fi
           done
-          
+
           for versioned_dir in versioned-*; do
             if [ -d "$versioned_dir" ]; then
               version=$(echo "$versioned_dir" | sed -E 's/versioned-([0-9]+\.[0-9]+)-.*/\1/')
               project_name=$(echo "$versioned_dir" | sed -E 's/versioned-[0-9]+\.[0-9]+-(.*)/\1/')
               mkdir -p "versioned_docs/version-$version"
-          
+
               mv "$versioned_dir" "versioned_docs/version-$version/$project_name"
               sidebar_file="versioned_sidebars/version-$version-sidebars.json"
               echo '{
@@ -123,7 +144,7 @@ jobs:
         run: |
           versions_json="versions.json"
           echo "[" > "$versions_json"
-          
+
           counter=0
           for version_dir in versioned_docs/version-*; do
             if [ -d "$version_dir" ]; then
@@ -132,15 +153,15 @@ jobs:
               if [ $counter -gt 0 ]; then
                 echo "," >> "$versions_json"
               fi
-              
+
               echo -n "  \"$version\"" >> "$versions_json"
-              
+
               counter=$(expr $counter + 1)
             fi
           done
-          
+
           echo -e "\n]" >> "$versions_json"
-          
+
           cat "$versions_json"
 
       - name: Upload Merged
