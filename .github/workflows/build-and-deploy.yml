@@ -29,8 +29,9 @@ jobs:
           { name: "coreshop/headless-bundle",             branch: "main", version: '4.0', dir: "12_Headless_Bundle" },
           { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.0', dir: "13_Loyalty_Bundle" },
           { name: "coreshop/quick-order-bundle",          branch: "main", version: '4.0', dir: "14_Quick_Order_Bundle" },
+          { name: "coreshop/ticketing-bundle",            branch: "main", version: '4.0', dir: "15_Ticketing_Bundle" },
 
-          { name: "coreshop/coreshop",                    branch: "next", version: '4.1', dir: "01_CoreShop" },
+          { name: "coreshop/coreshop",                    branch: "4.1",  version: '4.1', dir: "01_CoreShop" },
           { name: "coreshop/batch-messenger-bundle",      branch: "main", version: '4.1', dir: "02_Batch_Messenger_Bundle" },
           { name: "coreshop/credit-bundle",               branch: "main", version: '4.1', dir: "03_Credit_Bundle" },
           { name: "coreshop/document-route-bundle",       branch: "main", version: '4.1', dir: "04_Document_Route_Bundle" },
@@ -43,7 +44,8 @@ jobs:
           { name: "coreshop/b2b-company-bundle",          branch: "main", version: '4.1', dir: "11_B2B_Company_Bundle" },
           { name: "coreshop/headless-bundle",             branch: "main", version: '4.1', dir: "12_Headless_Bundle" },
           { name: "coreshop/loyalty-bundle",              branch: "main", version: '4.1', dir: "13_Loyalty_Bundle" },
-          { name: "coreshop/quick-order-bundle",          branch: "main", version: '4.1', dir: "14_Quick_Order_Bundle" }
+          { name: "coreshop/quick-order-bundle",          branch: "main", version: '4.1', dir: "14_Quick_Order_Bundle" },
+          { name: "coreshop/ticketing-bundle",            branch: "main", version: '4.1', dir: "15_Ticketing_Bundle" }
         ]
     steps:
       - name: Checkout ${{ matrix.repo.name }}
