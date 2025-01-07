@@ -91,14 +91,14 @@ jobs:
 
       - name: Upload Docs
         uses: actions/upload-artifact@v4
-        if: ${{ matrix.repo.version == '4.0' }}
+        if: ${{ matrix.repo.version == '4.1' }}
         with:
           name: docs-${{ matrix.repo.dir }}
           path: docs/${{ matrix.repo.dir }}
 
       - name: Upload Docs
         uses: actions/upload-artifact@v4
-        if: ${{ matrix.repo.version != '4.0' }}
+        if: ${{ matrix.repo.version != '4.1' }}
         with:
           name: versioned-${{ matrix.repo.version }}-${{ matrix.repo.dir }}
           path: docs/${{ matrix.repo.dir }}
