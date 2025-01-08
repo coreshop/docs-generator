@@ -48,7 +48,7 @@ const config = {
             },
             '4.0': {
               label: '4.0',
-              path: '4.00',
+              path: '4.0',
               banner: 'none',
             }
           },
