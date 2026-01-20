@@ -43,13 +43,18 @@ const config = {
           lastVersion: 'current',
           versions: {
             current: {
-              label: '4.1',
+              label: '5.0',
               path: '',
+            },
+            '4.1': {
+              label: '4.1',
+              path: '4.1',
+              banner: 'none',
             },
             '4.0': {
               label: '4.0',
               path: '4.0',
-              banner: 'none',
+              banner: 'unmaintained',
             }
           },
         },
