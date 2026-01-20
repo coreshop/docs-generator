@@ -12,7 +12,7 @@ const config = {
   favicon: 'img/favicon.png',
 
   // Set the production url of your site here
-  url: 'https://docs.coreshop.org',
+  url: 'https://docs.coreshop.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -78,7 +78,7 @@ const config = {
       // announcementBar: {
       //   id: 'support_us',
       //   content:
-      //       'We launched our new Website, please check it out here <a target="_blank" rel="noopener noreferrer" href="https://www.coreshop.org">www.coreshop.org</a>',
+      //       'We launched our new Website, please check it out here <a target="_blank" rel="noopener noreferrer" href="https://www.coreshop.com">www.coreshop.com</a>',
       //   backgroundColor: 'rgb(205, 16, 23)',
       //   textColor: 'white',
       //   isCloseable: false,
@@ -98,17 +98,12 @@ const config = {
             label: 'Documentation',
           },
           {
-            href: 'https://www.coreshop.org/en/partner',
-            label: 'Partner Program',
-            position: 'left'
-          },
-          {
-            href: 'https://www.coreshop.org/en/product/enterprise-bundles',
+            href: 'https://www.coreshop.com/en/product/enterprise-bundles',
             label: 'Enterprise Extensions',
             position: 'left'
           },
           {
-            href: 'https://www.coreshop.org/en/contact',
+            href: 'https://www.coreshop.com/en/contact',
             label: 'Contact Us',
             position: 'left'
           },
@@ -117,12 +112,12 @@ const config = {
             position: 'right',
             dropdownActiveClassDisabled: true,
             dropdownItemsAfter: [
-                {href: 'https://docs.coreshop.org/3.1.0', label: '3.2'},
-                {href: 'https://docs.coreshop.org/3.1.0', label: '3.1 (unmaintained)'},
-                {href: 'https://docs.coreshop.org/3.0.0', label: '3.0 (unmaintained)'},
-                {href: 'https://docs.coreshop.org/2.2.0', label: '2.2 (unmaintained)'},
-                {href: 'https://docs.coreshop.org/2.1.0', label: '2.1 (unmaintained)'},
-                {href: 'https://docs.coreshop.org/2.0.0', label: '2.0 (unmaintained)'},
+                {href: 'https://docs.coreshop.com/3.1.0', label: '3.2'},
+                {href: 'https://docs.coreshop.com/3.1.0', label: '3.1 (unmaintained)'},
+                {href: 'https://docs.coreshop.com/3.0.0', label: '3.0 (unmaintained)'},
+                {href: 'https://docs.coreshop.com/2.2.0', label: '2.2 (unmaintained)'},
+                {href: 'https://docs.coreshop.com/2.1.0', label: '2.1 (unmaintained)'},
+                {href: 'https://docs.coreshop.com/2.0.0', label: '2.0 (unmaintained)'},
             ],
 
           },
@@ -141,14 +136,10 @@ const config = {
             items: [
               {
                 label: 'CoreShop Website',
-                href: 'https://www.coreshop.org',
+                href: 'https://www.coreshop.com',
               },
               {
-                label: 'Partner Program',
-                href: 'https://www.coreshop.org/en/partner',
-              },
-              {
-                href: 'https://www.coreshop.org/en/product/enterprise-bundles',
+                href: 'https://www.coreshop.com/en/product/enterprise-bundles',
                 label: 'Enterprise Extensions',
               },
             ],
