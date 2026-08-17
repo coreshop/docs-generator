@@ -124,7 +124,11 @@ jobs:
               cat "$file" >> "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
               echo -e "\n\n" >> "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
             done
-          
+
+            # Changelogs may link to UPGRADE-*.md files in the repository root, which do
+            # not exist as docs pages — rewrite those links to point to GitHub instead.
+            sed -i -E 's|\]\((UPGRADE-[^)]+\.md)\)|](https://github.com/${{ matrix.repo.name }}/blob/${{ matrix.repo.branch }}/\1)|g' "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
+
             if [ ${{ matrix.repo.name }} = "coreshop/coreshop" ]; then
               rm -f docs/${{ matrix.repo.dir }}/01_Getting_Started/02_Upgrade_Notes.md
               mv docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md docs/${{ matrix.repo.dir }}/01_Getting_Started/02_Upgrade_Notes.md
