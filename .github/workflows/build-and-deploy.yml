@@ -78,21 +78,23 @@ jobs:
           { name: "coreshop/loyalty-bundle",              branch: "2.x",  version: '5.1', dir: "13_Loyalty_Bundle" },
           { name: "coreshop/quick-order-bundle",          branch: "2.x",  version: '5.1', dir: "14_Quick_Order_Bundle" },
           { name: "coreshop/ticketing-bundle",            branch: "2.x",  version: '5.1', dir: "15_Ticketing_Bundle" },
-          { name: "coreshop/coreshop",                    branch: "2026.x",  version: '2026.x', dir: "01_CoreShop" },
-          { name: "coreshop/batch-messenger-bundle",      branch: "2026.x",  version: '2026.x', dir: "02_Batch_Messenger_Bundle" },
-          { name: "coreshop/credit-bundle",               branch: "2026.x",  version: '2026.x', dir: "03_Credit_Bundle" },
-          { name: "coreshop/document-route-bundle",       branch: "2026.x",  version: '2026.x', dir: "04_Document_Route_Bundle" },
-          { name: "coreshop/inbound-email-rules-bundle",  branch: "2026.x",  version: '2026.x', dir: "05_Inbound_Email_Rules_Bundle" },
-          { name: "coreshop/index-geo-bundle",            branch: "2026.x",  version: '2026.x', dir: "06_Index_GEO_Bundle" },
-          { name: "coreshop/voucher-credit-bundle",       branch: "2026.x",  version: '2026.x', dir: "07_Voucher_Credit_Bundle" },
-          { name: "coreshop/warehouse-bundle",            branch: "2026.x",  version: '2026.x', dir: "08_Warehouse_Bundle" },
-          { name: "coreshop/deposit-bundle",              branch: "2026.x",  version: '2026.x', dir: "09_Deposit_Bundle" },
-          { name: "coreshop/customer-cluster-bundle",     branch: "2026.x",  version: '2026.x', dir: "10_Customer_Cluster_Bundle" },
-          { name: "coreshop/b2b-company-bundle",          branch: "2026.x",  version: '2026.x', dir: "11_B2B_Company_Bundle" },
-          { name: "coreshop/headless-bundle",             branch: "2026.x",  version: '2026.x', dir: "12_Headless_Bundle" },
-          { name: "coreshop/loyalty-bundle",              branch: "2026.x",  version: '2026.x', dir: "13_Loyalty_Bundle" },
-          { name: "coreshop/quick-order-bundle",          branch: "2026.x",  version: '2026.x', dir: "14_Quick_Order_Bundle" },
-          { name: "coreshop/ticketing-bundle",            branch: "2026.x",  version: '2026.x', dir: "15_Ticketing_Bundle" }
+          { name: "coreshop/enterprise-subscription-bundle", branch: "2025.x", version: '5.1', dir: "16_Enterprise_Subscription_Bundle" },
+          { name: "coreshop/coreshop",                    branch: "2026.x",  version: '2026.2', dir: "01_CoreShop" },
+          { name: "coreshop/batch-messenger-bundle",      branch: "2026.x",  version: '2026.2', dir: "02_Batch_Messenger_Bundle" },
+          { name: "coreshop/credit-bundle",               branch: "2026.x",  version: '2026.2', dir: "03_Credit_Bundle" },
+          { name: "coreshop/document-route-bundle",       branch: "2026.x",  version: '2026.2', dir: "04_Document_Route_Bundle" },
+          { name: "coreshop/inbound-email-rules-bundle",  branch: "2026.x",  version: '2026.2', dir: "05_Inbound_Email_Rules_Bundle" },
+          { name: "coreshop/index-geo-bundle",            branch: "2026.x",  version: '2026.2', dir: "06_Index_GEO_Bundle" },
+          { name: "coreshop/voucher-credit-bundle",       branch: "2026.x",  version: '2026.2', dir: "07_Voucher_Credit_Bundle" },
+          { name: "coreshop/warehouse-bundle",            branch: "2026.x",  version: '2026.2', dir: "08_Warehouse_Bundle" },
+          { name: "coreshop/deposit-bundle",              branch: "2026.x",  version: '2026.2', dir: "09_Deposit_Bundle" },
+          { name: "coreshop/customer-cluster-bundle",     branch: "2026.x",  version: '2026.2', dir: "10_Customer_Cluster_Bundle" },
+          { name: "coreshop/b2b-company-bundle",          branch: "2026.x",  version: '2026.2', dir: "11_B2B_Company_Bundle" },
+          { name: "coreshop/headless-bundle",             branch: "2026.x",  version: '2026.2', dir: "12_Headless_Bundle" },
+          { name: "coreshop/loyalty-bundle",              branch: "2026.x",  version: '2026.2', dir: "13_Loyalty_Bundle" },
+          { name: "coreshop/quick-order-bundle",          branch: "2026.x",  version: '2026.2', dir: "14_Quick_Order_Bundle" },
+          { name: "coreshop/ticketing-bundle",            branch: "2026.x",  version: '2026.2', dir: "15_Ticketing_Bundle" },
+          { name: "coreshop/enterprise-subscription-bundle", branch: "2026.x", version: '2026.2', dir: "16_Enterprise_Subscription_Bundle" }
         ]
     steps:
       - name: Checkout ${{ matrix.repo.name }}
@@ -113,14 +115,14 @@ jobs:
             fi
           fi
           
-          if ls ./tmp/${{ matrix.repo.dir }}/CHANGELOG-*.md 1> /dev/null 2>&1; then
+          if ls ./tmp/${{ matrix.repo.dir }}/CHANGELOG*.md 1> /dev/null 2>&1; then
             touch docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
             echo "# Upgrade Notes" >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
             echo -e "\n" >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
             echo "Always check this page for some important upgrade notes before updating to the latest coreshop build." >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
             echo -e "\n" >> docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md
           
-            for file in $(ls ./tmp/${{ matrix.repo.dir }}/CHANGELOG-*.md | sort -Vr); do
+            for file in $(ls ./tmp/${{ matrix.repo.dir }}/CHANGELOG*.md | sort -Vr); do
               cat "$file" >> "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
               echo -e "\n\n" >> "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
             done
@@ -152,14 +154,14 @@ jobs:
 
       - name: Upload Docs
         uses: actions/upload-artifact@v4
-        if: ${{ matrix.repo.version == '5.1' }}
+        if: ${{ matrix.repo.version == '2026.2' }}
         with:
           name: docs-${{ matrix.repo.dir }}
           path: docs/${{ matrix.repo.dir }}
 
       - name: Upload Docs
         uses: actions/upload-artifact@v4
-        if: ${{ matrix.repo.version != '5.1' }}
+        if: ${{ matrix.repo.version != '2026.2' }}
         with:
           name: versioned-${{ matrix.repo.version }}-${{ matrix.repo.dir }}
           path: docs/${{ matrix.repo.dir }}
