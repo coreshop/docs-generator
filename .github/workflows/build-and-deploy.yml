@@ -129,6 +129,16 @@ jobs:
             # not exist as docs pages — rewrite those links to point to GitHub instead.
             sed -i -E 's|\]\((UPGRADE-[^)]+\.md)\)|](https://github.com/${{ matrix.repo.name }}/blob/${{ matrix.repo.branch }}/\1)|g' "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
 
+            # Changelogs link to documentation pages repository-relative (docs/…), which is
+            # right on GitHub but not from the generated Upgrade Notes page. Rewrite them
+            # relative to that page: for the core it ends up one level below the docs root
+            # (01_Getting_Started/02_Upgrade_Notes.md), for the bundles at the docs root.
+            if [ ${{ matrix.repo.name }} = "coreshop/coreshop" ]; then
+              sed -i -E 's|\]\((\./)?docs/|](../|g' "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
+            else
+              sed -i -E 's|\]\((\./)?docs/|](./|g' "docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md"
+            fi
+
             if [ ${{ matrix.repo.name }} = "coreshop/coreshop" ]; then
               rm -f docs/${{ matrix.repo.dir }}/01_Getting_Started/02_Upgrade_Notes.md
               mv docs/${{ matrix.repo.dir }}/99_Upgrade_Notes.md docs/${{ matrix.repo.dir }}/01_Getting_Started/02_Upgrade_Notes.md
