@@ -59,7 +59,7 @@ const config = {
             '4.1': {
               label: '4.1',
               path: '4.1',
-              banner: 'none',
+              banner: 'unmaintained',
             },
             '4.0': {
               label: '4.0',
