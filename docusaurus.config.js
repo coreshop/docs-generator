@@ -57,12 +57,12 @@ const config = {
               banner: 'none',
             },
             '4.1': {
-              label: '4.1',
+              label: '4.1 (unmaintained)',
               path: '4.1',
               banner: 'unmaintained',
             },
             '4.0': {
-              label: '4.0',
+              label: '4.0 (unmaintained)',
               path: '4.0',
               banner: 'unmaintained',
             }
@@ -122,7 +122,7 @@ const config = {
             position: 'right',
             dropdownActiveClassDisabled: true,
             dropdownItemsAfter: [
-                {href: 'https://docs.coreshop.com/3.1.0', label: '3.2'},
+                {href: 'https://docs.coreshop.com/3.1.0', label: '3.2 (unmaintained)'},
                 {href: 'https://docs.coreshop.com/3.1.0', label: '3.1 (unmaintained)'},
                 {href: 'https://docs.coreshop.com/3.0.0', label: '3.0 (unmaintained)'},
                 {href: 'https://docs.coreshop.com/2.2.0', label: '2.2 (unmaintained)'},

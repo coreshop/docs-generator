@@ -211,7 +211,8 @@ jobs:
           echo "[" > "$versions_json"
 
           counter=0
-          for version_dir in versioned_docs/version-*; do
+          # newest first, so the version dropdown lists 5.1 before 5.0 before 4.1 …
+          for version_dir in $(ls -d versioned_docs/version-* | sort -t- -k2 -Vr); do
             if [ -d "$version_dir" ]; then
               version=$(basename "$version_dir" | sed -E 's/version-([0-9]+\.[0-9x]+)/\1/')
 
