@@ -46,11 +46,6 @@ const config = {
               label: '2026.2',
               path: '',
             },
-            '2026.x': {
-              label: '2026.x (dev)',
-              path: '2026.x',
-              banner: 'unreleased',
-            },
             '5.1': {
               label: '5.1',
               path: '5.1',
